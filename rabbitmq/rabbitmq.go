@@ -247,7 +247,7 @@ func (client *Client) init(conn *amqp.Connection, exclusive bool, autoDelete boo
 	if passive {
 		_, err = ch.QueueDeclarePassive(
 			client.queueName,
-			false,      // Durable
+			!exclusive, // Durable
 			autoDelete, // Delete when unused
 			exclusive,  // Exclusive
 			false,      // No-wait
@@ -256,7 +256,7 @@ func (client *Client) init(conn *amqp.Connection, exclusive bool, autoDelete boo
 	} else {
 		_, err = ch.QueueDeclare(
 			client.queueName,
-			false,      // Durable
+			!exclusive, // Durable
 			autoDelete, // Delete when unused
 			exclusive,  // Exclusive
 			false,      // No-wait
